@@ -1,0 +1,7 @@
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+firewall-cmd --state
+sed -i '/^SELINUX=.*/c SELINUX=disabled' /etc/selinux/config
+sed -i 's/^SELINUXTYPE=.*/SELINUXTYPE=disabled/g' /etc/selinux/config
+grep --color=auto '^SELINUX' /etc/selinux/config
+setenforce 0

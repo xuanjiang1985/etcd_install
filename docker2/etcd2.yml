@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  etcd:
+    container_name: etcd2
+    image: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd-amd64:3.3.10
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    network_mode: "host"
+    stdin_open: true
+    restart: always
+    tty: true
+    command: etcd --name etcd-srv2 --data-dir=/var/lib/etcd/ --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://192.168.83.131:2379 --initial-advertise-peer-urls http://192.168.83.131:2380 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-srv1=http://192.168.83.130:2380,etcd-srv2=http://192.168.83.131:2380,etcd-srv3=http://192.168.83.132:2380" --initial-cluster-state new
+    volumes:
+      - /var/lib/etcd:/var/lib/etcd
